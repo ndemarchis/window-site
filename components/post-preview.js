@@ -21,10 +21,16 @@ const PostPreview = ({
     width: 300,
     height: 300,
   })
+  const [disp, setDisp] = useState(true)
+  const [op, setOp] = useState(1)
+
+  const close = () => {
+    setDisp(false)
+  }
 
   return (
     <Rnd
-      className='shadow-small border-8 border-black p-2'
+      className={`shadow-small border-8 border-black p-2 overflow-clip ${!disp && 'hidden !important'} transition-opacity`}
       size={{ width: posState.width,  height: posState.height }}
       position={{ x: posState.x, y: posState.y }}
       onDragStop={(e, d) => { setPosState({ x: d.x, y: d.y }) }}
@@ -36,6 +42,14 @@ const PostPreview = ({
         });
       }}
     >
+      <div 
+        className='absolute p-10 w-10 h-10 -top-10 -right-10 text-center bg-black rounded-full cursor-pointer'
+        onClick={() => { setDisp(false) }}
+      >
+        <div className='absolute top-1/2 left-1/4 text-white text-xl overflow-visible font-black'>
+          &times;
+        </div>
+      </div>
       <div className="mb-5">
         <CoverImage slug={slug} title={title} imageObject={coverImage} url={imageBuilder(coverImage).url()} />
       </div>
